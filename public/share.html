@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    body {
+      font-family: 'Whitney-Book';
+      background: black;
+    }
+    #pic {
+      width: 100%;
+      height: 100%;
+    }
+    #buttons_wrapper {
+      position: absolute;
+      width: 100%;
+      bottom: 200px;
+    }
+    #buttons {
+      position: relative;
+      margin: 0 auto;
+      width: 50%;
+    }
+    #download_button {
+      float: right;
+    }
+    #tweet_button {
+      float: left;
+    }
+    .button {
+      font-size: 30px;
+      background: black;
+      color: white;
+      padding: 25px 20px 15px 20px;
+    }
+    #link {
+      position: relative;
+      margin: 400px auto 0 auto;
+      width: 50%;
+      font-size: 30px;
+      background: black;
+      color: white;
+      text-align: center;
+    }
+    </style>
+    <script src="js/jquery.js"></script>
+    <script>
+
+    var pic_path;
+
+    $(document).ready(function() {
+      var base_url = 'http://localhost:3000/';
+      setInterval(updatePicUrl, 1000);
+
+      function updatePicUrl() {
+        $.getJSON(base_url+'get_pic_path', function(data) {
+          console.log(data.path);
+          if (data.path !== pic_path) {
+            pic_path = data.path;
+            updatePic();
+          }
+        });
+      }
+
+      function updatePic() {
+        $('#link').html('');
+        $('#pic').attr("src", pic_path);
+        $('#pic').fadeIn();
+        $('#buttons').fadeIn();
+      }
+
+      function displayEnd(url) {
+        $('#pic').fadeOut();
+        $('#buttons').fadeOut();
+        if (url) {
+          $('#link').html('DOWNLOAD AT '+url);
+        } else {
+          $('#link').html('CHECK DEM TWEETS');
+        }
+      }
+
+      $('#tweet_button').click(function(){
+        $.getJSON(base_url+'tweet_pic', {path: pic_path}, function(data) {
+          displayEnd();
+        });
+      });
+
+      $('#download_button').click(function(){
+        $.getJSON(base_url+'upload_pic', {path: pic_path}, function(data) {
+          console.log(data)
+          displayEnd(data.url);
+        });
+      });
+    });
+    </script>
+      
+  </head>
+  <body>
+  <img id='pic'/>
+  <div id='link'></div>
+  <div id='buttons_wrapper'>
+    <div id='buttons'>
+      <div id='tweet_button' class='button'>TWEET IT AT ME</div>
+      <div id='download_button' class='button'>SHOW DOWNLOAD URL</div>
+    </div>
+  </div>
+  </body>
+</html>

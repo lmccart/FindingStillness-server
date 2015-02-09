@@ -18,12 +18,12 @@ var server = app.listen(3000, function () {
 
   var hr = 0;
   var start_time = 0;
-  var total_time = 90*1000;
+  var total_time = 10*1000;
   var running = false;
   var end_timer, pic_timer;
+  var pic_path;
 
   app.get('/send_heartrate', function (req, res) {
-    takePic();
     hr = parseFloat(req.query.hr);
     if (!running) {
       start();
@@ -35,6 +35,21 @@ var server = app.listen(3000, function () {
     var time_remaining = Math.floor(total_time - (new Date().getTime() - start_time), 0);
     res.send({hr: hr, time_remaining: time_remaining});
   });
+
+  app.get('/get_pic_path', function (req, res) {
+    res.send({path: pic_path});
+  });
+
+  app.get('/tweet_pic', function (req, res) {
+    var p = req.query.path;
+    res.send({}); //pend
+  });
+
+  app.get('/upload_pic', function (req, res) {
+    var p = req.query.path;
+    res.send({url: p}); //pend
+  });
+
 
   function start() {
     start_time = new Date().getTime();
@@ -55,10 +70,12 @@ var server = app.listen(3000, function () {
     running = false;
   }
 
+  var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
   function takePic() {
-    var path = '/Users/lmccart/Documents/stillness/FS_server/pics/';
-    imagesnapjs.capture(path+new Date().getTime()+'.jpg', function(err) {
+    var img_path = 'pics/'+new Date().getTime()+'.jpg';
+    imagesnapjs.capture(path+img_path, function(err) {
       console.log(err ? err : 'Success!');
+      pic_path = img_path;
     });
   }
 
