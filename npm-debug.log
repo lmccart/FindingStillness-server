@@ -1,160 +1,85 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'imagesnapjs' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'snapjs' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.33
-4 verbose cache add [ 'imagesnapjs', null ]
-5 verbose cache add name=undefined spec="imagesnapjs" args=["imagesnapjs",null]
-6 verbose parsed url { protocol: null,
-6 verbose parsed url   slashes: null,
-6 verbose parsed url   auth: null,
-6 verbose parsed url   host: null,
-6 verbose parsed url   port: null,
-6 verbose parsed url   hostname: null,
-6 verbose parsed url   hash: null,
-6 verbose parsed url   search: null,
-6 verbose parsed url   query: null,
-6 verbose parsed url   pathname: 'imagesnapjs',
-6 verbose parsed url   path: 'imagesnapjs',
-6 verbose parsed url   href: 'imagesnapjs' }
-7 silly lockFile e34241b3-imagesnapjs imagesnapjs
-8 verbose lock imagesnapjs /Users/lmccart/.npm/e34241b3-imagesnapjs.lock
-9 silly lockFile e34241b3-imagesnapjs imagesnapjs
-10 silly lockFile e34241b3-imagesnapjs imagesnapjs
-11 verbose addNamed [ 'imagesnapjs', '' ]
-12 verbose addNamed [ null, '*' ]
-13 silly lockFile 865a8bb3-imagesnapjs imagesnapjs@
-14 verbose lock imagesnapjs@ /Users/lmccart/.npm/865a8bb3-imagesnapjs.lock
-15 silly addNameRange { name: 'imagesnapjs', range: '*', hasData: false }
-16 verbose request where is /imagesnapjs
-17 verbose request registry https://registry.npmjs.org/
-18 verbose request id 2f374e5e774b1f47
-19 verbose url raw /imagesnapjs
-20 verbose url resolving [ 'https://registry.npmjs.org/', './imagesnapjs' ]
-21 verbose url resolved https://registry.npmjs.org/imagesnapjs
-22 verbose request where is https://registry.npmjs.org/imagesnapjs
-23 info trying registry request attempt 1 at 19:15:19
-24 http GET https://registry.npmjs.org/imagesnapjs
-25 http 200 https://registry.npmjs.org/imagesnapjs
-26 silly registry.get cb [ 200,
-26 silly registry.get   { date: 'Sun, 01 Feb 2015 00:15:19 GMT',
-26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-26 silly registry.get     etag: '"7D3DNKJ1Z7ZN06PQNRW1PQI7O"',
-26 silly registry.get     'content-type': 'application/json',
-26 silly registry.get     'cache-control': 'max-age=60',
-26 silly registry.get     'content-length': '7719',
-26 silly registry.get     'accept-ranges': 'bytes',
-26 silly registry.get     via: '1.1 varnish',
-26 silly registry.get     age: '0',
-26 silly registry.get     'x-served-by': 'cache-atl6234-ATL',
-26 silly registry.get     'x-cache': 'MISS',
-26 silly registry.get     'x-cache-hits': '0',
-26 silly registry.get     'x-timer': 'S1422749719.286465,VS0,VE315',
-26 silly registry.get     vary: 'Accept',
-26 silly registry.get     'keep-alive': 'timeout=10, max=50',
-26 silly registry.get     connection: 'Keep-Alive' } ]
-27 silly addNameRange number 2 { name: 'imagesnapjs', range: '*', hasData: true }
-28 silly addNameRange versions [ 'imagesnapjs', [ '0.0.1', '0.0.2', '0.0.3', '0.0.4' ] ]
-29 verbose addNamed [ 'imagesnapjs', '0.0.4' ]
-30 verbose addNamed [ '0.0.4', '0.0.4' ]
-31 silly lockFile cd4e8d73-imagesnapjs-0-0-4 imagesnapjs@0.0.4
-32 verbose lock imagesnapjs@0.0.4 /Users/lmccart/.npm/cd4e8d73-imagesnapjs-0-0-4.lock
-33 silly lockFile 27eba1f4-magesnapjs-imagesnapjs-0-0-4-tgz https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz
-34 verbose lock https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz /Users/lmccart/.npm/27eba1f4-magesnapjs-imagesnapjs-0-0-4-tgz.lock
-35 verbose addRemoteTarball [ 'https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz',
-35 verbose addRemoteTarball   '1b2e63d7682841e9b5f05a4b82126c359f3ac3d3' ]
-36 info retry fetch attempt 1 at 19:15:19
-37 verbose fetch to= /var/folders/dr/cjgrc05s651ftw2nn350c7d40000gn/T/npm-8244-VWc8HEVP/registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz
-38 http GET https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz
-39 http 200 https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz
-40 silly lockFile 27eba1f4-magesnapjs-imagesnapjs-0-0-4-tgz https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz
-41 silly lockFile 27eba1f4-magesnapjs-imagesnapjs-0-0-4-tgz https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz
-42 silly lockFile cd4e8d73-imagesnapjs-0-0-4 imagesnapjs@0.0.4
-43 silly lockFile cd4e8d73-imagesnapjs-0-0-4 imagesnapjs@0.0.4
-44 silly lockFile 865a8bb3-imagesnapjs imagesnapjs@
-45 silly lockFile 865a8bb3-imagesnapjs imagesnapjs@
-46 silly resolved [ { name: 'imagesnapjs',
-46 silly resolved     version: '0.0.4',
-46 silly resolved     description: 'An npm/nodejs wrapper for imagesnap',
-46 silly resolved     keywords:
-46 silly resolved      [ 'imagesnap',
-46 silly resolved        'webcam',
-46 silly resolved        'image',
-46 silly resolved        'photo',
-46 silly resolved        'iSight',
-46 silly resolved        'capture',
-46 silly resolved        'imagesnapjs',
-46 silly resolved        'darwin',
-46 silly resolved        'osx' ],
-46 silly resolved     homepage: 'https://github.com/danyshaanan/imagesnapjs',
-46 silly resolved     author:
-46 silly resolved      { name: 'Dany Shaanan',
-46 silly resolved        email: 'danyshaanan@gmail.com',
-46 silly resolved        url: 'http://danyshaanan.com/' },
-46 silly resolved     os: [ 'darwin' ],
-46 silly resolved     contributors: [],
-46 silly resolved     license: 'MIT',
-46 silly resolved     licenses: [ [Object] ],
-46 silly resolved     repository:
-46 silly resolved      { type: 'git',
-46 silly resolved        url: 'git://github.com/danyshaanan/imagesnapjs.git' },
-46 silly resolved     bugs:
-46 silly resolved      { url: 'https://github.com/danyshaanan/imagesnapjs',
-46 silly resolved        email: 'danyshaanan@gmail.com' },
-46 silly resolved     main: './imagesnapjs.js',
-46 silly resolved     scripts: { test: 'grunt' },
-46 silly resolved     bin: { imagesnap: './bin/imagesnap' },
-46 silly resolved     dependencies: {},
-46 silly resolved     devDependencies:
-46 silly resolved      { grunt: '0.4.5',
-46 silly resolved        'grunt-bump': '0.0.16',
-46 silly resolved        'grunt-eslint': '4.0.0' },
-46 silly resolved     gitHead: '3db27459fa12ed8daa026a095f5d614be20e2dd4',
-46 silly resolved     _id: 'imagesnapjs@0.0.4',
-46 silly resolved     _shasum: '1b2e63d7682841e9b5f05a4b82126c359f3ac3d3',
-46 silly resolved     _from: 'imagesnapjs@',
-46 silly resolved     _npmVersion: '1.4.28',
-46 silly resolved     _npmUser: { name: 'danyshaanan', email: 'danyshaanan@gmail.com' },
-46 silly resolved     maintainers: [ [Object] ],
-46 silly resolved     dist:
-46 silly resolved      { shasum: '1b2e63d7682841e9b5f05a4b82126c359f3ac3d3',
-46 silly resolved        tarball: 'http://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz' },
-46 silly resolved     directories: {},
-46 silly resolved     _resolved: 'https://registry.npmjs.org/imagesnapjs/-/imagesnapjs-0.0.4.tgz' } ]
-47 info install imagesnapjs@0.0.4 into /usr/local/lib
-48 info installOne imagesnapjs@0.0.4
-49 verbose lib/node_modules/imagesnapjs unbuild
-50 verbose tar unpack /Users/lmccart/.npm/imagesnapjs/0.0.4/package.tgz
-51 silly lockFile 5037b855-cal-lib-node-modules-imagesnapjs tar:///usr/local/lib/node_modules/imagesnapjs
-52 verbose lock tar:///usr/local/lib/node_modules/imagesnapjs /Users/lmccart/.npm/5037b855-cal-lib-node-modules-imagesnapjs.lock
-53 silly lockFile 67c865d2-pm-imagesnapjs-0-0-4-package-tgz tar:///Users/lmccart/.npm/imagesnapjs/0.0.4/package.tgz
-54 verbose lock tar:///Users/lmccart/.npm/imagesnapjs/0.0.4/package.tgz /Users/lmccart/.npm/67c865d2-pm-imagesnapjs-0-0-4-package-tgz.lock
-55 silly gunzTarPerm modes [ '755', '644' ]
-56 error Error: EACCES, mkdir '/usr/local/lib/node_modules/imagesnapjs'
-56 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/imagesnapjs']
-56 error   errno: 3,
-56 error   code: 'EACCES',
-56 error   path: '/usr/local/lib/node_modules/imagesnapjs',
-56 error   fstream_type: 'Directory',
-56 error   fstream_path: '/usr/local/lib/node_modules/imagesnapjs',
-56 error   fstream_class: 'DirWriter',
-56 error   fstream_stack:
-56 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
-56 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
-56 error      'Object.oncomplete (fs.js:107:15)' ] }
-57 error Please try running this command again as root/Administrator.
-58 error System Darwin 14.0.0
-59 error command "node" "/usr/local/bin/npm" "install" "-g" "imagesnapjs"
-60 error cwd /Users/lmccart/Documents/stillness/PulseSth
-61 error node -v v0.10.33
-62 error npm -v 1.4.28
-63 error path /usr/local/lib/node_modules/imagesnapjs
-64 error fstream_path /usr/local/lib/node_modules/imagesnapjs
-65 error fstream_type Directory
-66 error fstream_class DirWriter
-67 error code EACCES
-68 error errno 3
-69 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/imagesnapjs'
-70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
-70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
-70 error fstream_stack Object.oncomplete (fs.js:107:15)
-71 verbose exit [ 3, true ]
+4 warn package.json PulseSth@1.0.0 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'snapjs', null ]
+7 verbose cache add name=undefined spec="snapjs" args=["snapjs",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'snapjs',
+8 verbose parsed url   path: 'snapjs',
+8 verbose parsed url   href: 'snapjs' }
+9 silly lockFile 9533224c-snapjs snapjs
+10 verbose lock snapjs /Users/lmccart/.npm/9533224c-snapjs.lock
+11 silly lockFile 9533224c-snapjs snapjs
+12 silly lockFile 9533224c-snapjs snapjs
+13 verbose addNamed [ 'snapjs', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 77c30972-snapjs snapjs@
+16 verbose lock snapjs@ /Users/lmccart/.npm/77c30972-snapjs.lock
+17 silly addNameRange { name: 'snapjs', range: '*', hasData: false }
+18 verbose request where is /snapjs
+19 verbose request registry https://registry.npmjs.org/
+20 verbose request id 0cbf74d656f18923
+21 verbose url raw /snapjs
+22 verbose url resolving [ 'https://registry.npmjs.org/', './snapjs' ]
+23 verbose url resolved https://registry.npmjs.org/snapjs
+24 verbose request where is https://registry.npmjs.org/snapjs
+25 info trying registry request attempt 1 at 17:06:22
+26 http GET https://registry.npmjs.org/snapjs
+27 http 404 https://registry.npmjs.org/snapjs
+28 verbose headers { date: 'Mon, 09 Feb 2015 22:06:22 GMT',
+28 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+28 verbose headers   'content-type': 'application/json',
+28 verbose headers   'cache-control': 'max-age=0',
+28 verbose headers   'content-length': '52',
+28 verbose headers   'accept-ranges': 'bytes',
+28 verbose headers   via: '1.1 varnish',
+28 verbose headers   age: '0',
+28 verbose headers   'x-served-by': 'cache-iad2134-IAD',
+28 verbose headers   'x-cache': 'MISS',
+28 verbose headers   'x-cache-hits': '0',
+28 verbose headers   'x-timer': 'S1423519582.694497,VS0,VE60',
+28 verbose headers   'keep-alive': 'timeout=10, max=50',
+28 verbose headers   connection: 'Keep-Alive' }
+29 silly registry.get cb [ 404,
+29 silly registry.get   { date: 'Mon, 09 Feb 2015 22:06:22 GMT',
+29 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+29 silly registry.get     'content-type': 'application/json',
+29 silly registry.get     'cache-control': 'max-age=0',
+29 silly registry.get     'content-length': '52',
+29 silly registry.get     'accept-ranges': 'bytes',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     age: '0',
+29 silly registry.get     'x-served-by': 'cache-iad2134-IAD',
+29 silly registry.get     'x-cache': 'MISS',
+29 silly registry.get     'x-cache-hits': '0',
+29 silly registry.get     'x-timer': 'S1423519582.694497,VS0,VE60',
+29 silly registry.get     'keep-alive': 'timeout=10, max=50',
+29 silly registry.get     connection: 'Keep-Alive' } ]
+30 silly lockFile 77c30972-snapjs snapjs@
+31 silly lockFile 77c30972-snapjs snapjs@
+32 error 404 404 Not Found: snapjs
+32 error 404
+32 error 404 'snapjs' is not in the npm registry.
+32 error 404 You should bug the author to publish it
+32 error 404 It was specified as a dependency of 'PulseSth'
+32 error 404
+32 error 404 Note that you can also install from a
+32 error 404 tarball, folder, or http url, or git url.
+33 error System Darwin 14.0.0
+34 error command "node" "/usr/local/bin/npm" "install" "snapjs"
+35 error cwd /Users/lmccart/Documents/stillness/FS_server
+36 error node -v v0.10.33
+37 error npm -v 1.4.28
+38 error code E404
+39 verbose exit [ 1, true ]

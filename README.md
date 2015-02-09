@@ -1,4 +1,4 @@
-# PulseSth
+# Finding Stillness (server)
 
 ### Install
 0. `npm install`
@@ -12,8 +12,6 @@
 ### Modules & libs
 
 #### Frontend
-* http://requirejs.org/
 
 #### Backend
 * http://expressjs.com
-* https://github.com/wiedi/node-dmx
