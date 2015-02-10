@@ -1,10 +1,22 @@
+var osc = require('node-osc');
 var express = require('express');
-var app = express();
 var imagesnapjs = require('./imagesnap');
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!')
-// })
+
+
+
+var oscServer = new osc.Server(3333, '0.0.0.0');
+oscServer.on("message", function (msg, rinfo) {
+      console.log("TUIO message:");
+      console.log(msg);
+});
+
+
+var oscClient = new osc.Client('127.0.0.1', 3333);
+oscClient.send('/oscAddress', 200);
+
+var app = express();
+
 
 app.use(express.static(__dirname + '/public'));
 
@@ -25,6 +37,7 @@ var server = app.listen(3000, function () {
 
   app.get('/send_heartrate', function (req, res) {
     hr = parseFloat(req.query.hr);
+    oscClient.send('/heartrate', hr);
     if (!running) {
       start();
     }

@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dropbox": "^0.10.3",
     "express": "^4.11.1",
-    "imagesnapjs": "0.0.4"
+    "imagesnapjs": "0.0.4",
+    "node-osc": "^0.3.0"
   }
 }
