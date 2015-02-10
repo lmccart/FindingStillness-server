@@ -2,7 +2,15 @@ var osc = require('node-osc');
 var express = require('express');
 var imagesnapjs = require('./imagesnap');
 
+var JSFtp = require('jsftp');
 
+var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
+
+var ftp = new JSFtp({
+  host: 'ftp.xxx.com',
+  user: '',
+  pass: ''
+});
 
 
 var oscServer = new osc.Server(3333, '0.0.0.0');
@@ -60,6 +68,11 @@ var server = app.listen(3000, function () {
 
   app.get('/upload_pic', function (req, res) {
     var p = req.query.path;
+    ftp.put(path+p, '/home/pplkpr/pplkpr.com'+p, function(hadError) {
+      console.log(path+p, '/home/pplkpr/pplkpr.com/'+p);
+      if (!hadError)
+        console.log("File transferred successfully!");
+    });
     res.send({url: p}); //pend
   });
 
@@ -84,7 +97,6 @@ var server = app.listen(3000, function () {
     running = false;
   }
 
-  var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
   function takePic() {
     var img_path = 'pics/'+new Date().getTime()+'.jpg';
     imagesnapjs.capture(path+img_path, function(err) {
