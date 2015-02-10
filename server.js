@@ -74,6 +74,7 @@ var server = app.listen(3000, function () {
       takePic();
     }, 3*1000);
     console.log('Starting at '+start_time);
+    oscClient.send('/start');
   }
 
   function reset() {
