@@ -6,7 +6,7 @@
       font-family: 'Whitney-Book';
       background: black;
     }
-    #pic {
+    #slider {
       width: 100%;
       height: 100%;
     }
@@ -43,55 +43,96 @@
     }
     </style>
     <script src="js/jquery.js"></script>
+    <script src="js/jssor.slider.js"></script>
+
     <script>
 
-    var pic_path;
+    var newest_pic;
 
     $(document).ready(function() {
+
+      var options = {
+        $AutoPlay: false,
+        $DragOrientation: 1
+      };
+      var slider = new $JssorSlider$('slider', options);
+
       var base_url = 'http://localhost:3000/';
       setInterval(updatePicUrl, 1000);
 
       function updatePicUrl() {
-        $.getJSON(base_url+'get_pic_path', function(data) {
-          console.log(data.path);
-          if (data.path !== pic_path) {
-            pic_path = data.path;
-            updatePic();
+        $.getJSON(base_url+'get_pics', function(data) {
+          var n = data.pics[data.pics.length-1];
+          if (n !== newest_pic) {
+            newest_pic = n;
+            updatePics(data.pics);
           }
         });
       }
 
-      function updatePic() {
+      function updatePics(p) {
         $('#link').html('');
-        $('#pic').attr("src", pic_path);
-        $('#pic').fadeIn();
+        $('#slider').fadeOut();
+        //$('#slides').empty();
+        var slides = $('#slides').children();
+        var j = 1;
+        for (var i=p.length-1; i>=0; i--) {
+          if (j < slides.length) {
+            $(slides[j]).html('<img u="image" src="'+p[i]+'" />');
+            j++;
+          }
+        }
+        slider.$GoTo(0);
+        $('#slider').fadeIn();
         $('#buttons').fadeIn();
       }
 
+      function getCurrentImg() {
+        var n = slider.$CurrentIndex();
+        var slides = $('#slides').children();
+        return $(slides[n+1]).children()[0];
+      }
+
       function displayEnd(url) {
-        $('#pic').fadeOut();
+        $('#slider').fadeOut();
         $('#buttons').fadeOut();
         $('#link').html('THANK YOU');
       }
 
-      $('#tweet_button').click(function(){
-        $.getJSON(base_url+'tweet_pic', {path: pic_path, username:'laurmccarthy'}, function(data) {
+      function doPicAction(endpoint, user) {
+        var img = getCurrentImg();
+        if (img) {
+          var ind = window.location.origin.length+1;
+          $.getJSON(base_url+endpoint, {path: img.src.substring(ind), user:user}, function(data) {
+            displayEnd();
+          });
+        } else {
           displayEnd();
-        });
+        }
+      }
+
+      $('#tweet_button').click(function(){
+        doPicAction('tweet_pic', 'laurmccarthy');
       });
 
       $('#mail_button').click(function(){
-        $.getJSON(base_url+'mail_pic', {path: pic_path, email:'laurmccarthy@gmail.com'}, function(data) {
-          console.log(data)
-          displayEnd(data.url);
-        });
+        doPicAction('mail_pic', 'laurmccarthy@gmail.com');
       });
     });
     </script>
       
   </head>
   <body>
-  <img id='pic'/>
+  <div id='slider' style='position: absolute; top: 0px; left: 0px; width: 1024px;
+    height: 768px;'>
+    <div id='slides' u='slides' style='cursor: move; position: absolute; left: 0px; top: 0px; width: 1024px; height: 768px; overflow: hidden;'>
+      <div><img u='image' src='pics/1423519974743.jpg'/></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
   <div id='link'></div>
   <div id='buttons_wrapper'>
     <div id='buttons'>

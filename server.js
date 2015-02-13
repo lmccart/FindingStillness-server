@@ -9,6 +9,7 @@ var imagesnapjs = require('./imagesnap');
 
 
 var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
+var recent_pics = [];
 
 //// OSC
 var oscServer = new osc.Server(3333, '0.0.0.0');
@@ -54,7 +55,6 @@ var server = app.listen(3000, function () {
   var total_time = 10*1000;
   var running = false;
   var end_timer, pic_timer;
-  var pic_path;
 
   app.get('/send_heartrate', function (req, res) {
     hr = parseFloat(req.query.hr);
@@ -70,20 +70,20 @@ var server = app.listen(3000, function () {
     res.send({hr: hr, time_remaining: time_remaining});
   });
 
-  app.get('/get_pic_path', function (req, res) {
-    res.send({path: pic_path});
+  app.get('/get_pics', function (req, res) {
+    res.send({pics: recent_pics});
   });
 
   app.get('/tweet_pic', function (req, res) {
     var p = req.query.path;
-    var u = req.query.username;
+    var u = req.query.user;
     tweetPic(p, u);
     res.send({}); //pend
   });
 
   app.get('/mail_pic', function (req, res) {
     var p = req.query.path;
-    var e = req.query.email;
+    var e = req.query.user;
     mailPic(p, e);
     res.send({url: p}); //pend
   });
@@ -113,7 +113,8 @@ var server = app.listen(3000, function () {
     var img_path = 'pics/'+new Date().getTime()+'.jpg';
     imagesnapjs.capture(path+img_path, function(err) {
       console.log(err ? err : 'Success!');
-      pic_path = img_path;
+      if (recent_pics.length == 4) recent_pics.shift();
+      recent_pics.push(img_path);
     });
   }
 
