@@ -1,27 +1,40 @@
+var fs = require('fs');
 var osc = require('node-osc');
+var nodemailer = require('nodemailer');
+var Twit = require('twit');
 var express = require('express');
+var config = require('./config');
 var imagesnapjs = require('./imagesnap');
 
-var JSFtp = require('jsftp');
+
 
 var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
 
-var ftp = new JSFtp({
-  host: 'ftp.xxx.com',
-  user: '',
-  pass: ''
-});
-
-
+//// OSC
 var oscServer = new osc.Server(3333, '0.0.0.0');
 oscServer.on("message", function (msg, rinfo) {
-      console.log("TUIO message:");
-      console.log(msg);
+  console.log("TUIO message:");
+  console.log(msg);
 });
-
 
 var oscClient = new osc.Client('127.0.0.1', 3333);
 oscClient.send('/oscAddress', 200);
+
+//// MAILER
+// create reusable transporter object using SMTP transport
+var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: { user: 'crowdpilotme@gmail.com', pass: 'krkrkrautpilot1' }
+});
+
+
+//// TWITTER
+var twit = new Twit({
+  consumer_key: config.twitter.consumer_key,
+  consumer_secret: config.twitter.consumer_secret,
+  access_token: config.twitter.access_token,
+  access_token_secret: config.twitter.access_token_secret
+});
 
 var app = express();
 
@@ -63,16 +76,15 @@ var server = app.listen(3000, function () {
 
   app.get('/tweet_pic', function (req, res) {
     var p = req.query.path;
+    var u = req.query.username;
+    tweetPic(p, u);
     res.send({}); //pend
   });
 
-  app.get('/upload_pic', function (req, res) {
+  app.get('/mail_pic', function (req, res) {
     var p = req.query.path;
-    ftp.put(path+p, '/home/pplkpr/pplkpr.com'+p, function(hadError) {
-      console.log(path+p, '/home/pplkpr/pplkpr.com/'+p);
-      if (!hadError)
-        console.log("File transferred successfully!");
-    });
+    var e = req.query.email;
+    mailPic(p, e);
     res.send({url: p}); //pend
   });
 
@@ -102,6 +114,33 @@ var server = app.listen(3000, function () {
     imagesnapjs.capture(path+img_path, function(err) {
       console.log(err ? err : 'Success!');
       pic_path = img_path;
+    });
+  }
+
+  function tweetPic(p, u) {
+    var tweet = 'hello world';
+    var f = fs.readFileSync(path+p,'base64');
+    twit.post('media/upload', { media: f }, function (err, data, response) {
+      var mediaIdStr = data.media_id_string
+      var params = { status: 'hello world', media_ids: [mediaIdStr] }
+      twit.post('statuses/update', params, function (err, data, response) {
+        if (err) console.log(err);
+      })
+    });
+  }
+
+  function mailPic(p, e) {
+    var mailOptions = {
+      from: 'lo <laurmccarthy@gmail.com>',
+      to: e,
+      subject: 'Hello',
+      html: '<b>Hello world</b>',
+      attachments:[{ filename: p.substring(5), path: path+p }],
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(err, info){
+      if(err) console.log(err);
+      else console.log('Message sent: ' + info.response);
     });
   }
 

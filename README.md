@@ -12,6 +12,11 @@
 ### Modules & libs
 
 #### Frontend
+* http://jquery.com
 
 #### Backend
 * http://expressjs.com
+* https://github.com/andris9/Nodemailer
+* https://github.com/ttezel/twit
+* https://github.com/TheAlphaNerd/node-osc
+* https://github.com/danyshaanan/imagesnapjs

@@ -20,7 +20,7 @@
       margin: 0 auto;
       width: 70%;
     }
-    #download_button {
+    #mail_button {
       float: right;
     }
     #tweet_button {
@@ -71,21 +71,17 @@
       function displayEnd(url) {
         $('#pic').fadeOut();
         $('#buttons').fadeOut();
-        if (url) {
-          $('#link').html('DOWNLOAD AT '+url);
-        } else {
-          $('#link').html('CHECK DEM TWEETS');
-        }
+        $('#link').html('THANK YOU');
       }
 
       $('#tweet_button').click(function(){
-        $.getJSON(base_url+'tweet_pic', {path: pic_path}, function(data) {
+        $.getJSON(base_url+'tweet_pic', {path: pic_path, username:'laurmccarthy'}, function(data) {
           displayEnd();
         });
       });
 
-      $('#download_button').click(function(){
-        $.getJSON(base_url+'upload_pic', {path: pic_path}, function(data) {
+      $('#mail_button').click(function(){
+        $.getJSON(base_url+'mail_pic', {path: pic_path, email:'laurmccarthy@gmail.com'}, function(data) {
           console.log(data)
           displayEnd(data.url);
         });
@@ -100,7 +96,7 @@
   <div id='buttons_wrapper'>
     <div id='buttons'>
       <div id='tweet_button' class='button'>TWEET IT AT ME</div>
-      <div id='download_button' class='button'>SHOW DOWNLOAD URL</div>
+      <div id='mail_button' class='button'>EMAIL IT TO ME</div>
     </div>
   </div>
   </body>
