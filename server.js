@@ -24,7 +24,7 @@ oscClient.send('/oscAddress', 200);
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
-  auth: { user: 'crowdpilotme@gmail.com', pass: 'krkrkrautpilot1' }
+  auth: { user: config.gmail.username, pass: config.gmail.password }
 });
 
 
