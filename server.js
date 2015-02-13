@@ -1,8 +1,11 @@
 var fs = require('fs');
+var express = require('express');
 var osc = require('node-osc');
+
 var nodemailer = require('nodemailer');
 var Twit = require('twit');
-var express = require('express');
+var Dropbox = require("dropbox");
+
 var config = require('./config');
 var imagesnapjs = require('./imagesnap');
 
@@ -35,6 +38,17 @@ var twit = new Twit({
   consumer_secret: config.twitter.consumer_secret,
   access_token: config.twitter.access_token,
   access_token_secret: config.twitter.access_token_secret
+});
+
+
+//// DROPBOX
+var client = new Dropbox.Client({
+  key: config.dropbox.key,
+  token: config.dropbox.token
+});
+client.authDriver(new Dropbox.AuthDriver.NodeServer(8191));
+client.authenticate(function(err, client) { 
+  if (err) console.log(err);
 });
 
 var app = express();
@@ -110,23 +124,37 @@ var server = app.listen(3000, function () {
   }
 
   function takePic() {
-    var img_path = 'pics/'+new Date().getTime()+'.jpg';
+    var img_path = 'pics/'+new Date().toISOString()+'.jpg';
     imagesnapjs.capture(path+img_path, function(err) {
       console.log(err ? err : 'Success!');
       if (recent_pics.length == 4) recent_pics.shift();
       recent_pics.push(img_path);
+      dropboxPic(img_path);
+    });
+  }
+
+  function dropboxPic(p) {
+    fs.readFile(path+p, function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      client.writeFile(p.substring(5), data, function(err, stat) {
+        if (err) console.log(err);
+      });
     });
   }
 
   function tweetPic(p, u) {
     var tweet = 'hello world';
-    var f = fs.readFileSync(path+p,'base64');
-    twit.post('media/upload', { media: f }, function (err, data, response) {
-      var mediaIdStr = data.media_id_string
-      var params = { status: 'hello world', media_ids: [mediaIdStr] }
-      twit.post('statuses/update', params, function (err, data, response) {
-        if (err) console.log(err);
-      })
+    fs.readFile(path+p, 'base64', function(err, data) {
+      twit.post('media/upload', { media: data }, function (err, data, response) {
+        var mediaIdStr = data.media_id_string
+        var params = { status: 'hello world', media_ids: [mediaIdStr] }
+        twit.post('statuses/update', params, function (err, data, response) {
+          if (err) console.log(err);
+        })
+      });
     });
   }
 

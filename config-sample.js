@@ -8,5 +8,9 @@ module.exports = {
   gmail: {
     username: 'YOUR_USERNAME',
     password: 'YOUR_PASSWORD'
+  },
+  dropbox: {
+    key: 'YOUR_KEY',
+    token: 'YOUR_TOKEN'
   }
 }

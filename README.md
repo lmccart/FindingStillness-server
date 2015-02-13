@@ -20,3 +20,4 @@
 * https://github.com/ttezel/twit
 * https://github.com/TheAlphaNerd/node-osc
 * https://github.com/danyshaanan/imagesnapjs
+* https://github.com/dropbox/dropbox-js
