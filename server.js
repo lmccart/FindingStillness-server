@@ -74,7 +74,7 @@ var server = app.listen(3000, function () {
     hr = parseFloat(req.query.hr);
     oscClient.send('/heartrate', hr);
     if (!running) {
-      start();
+      //start(); //temp
     }
     res.send('success');
   });
