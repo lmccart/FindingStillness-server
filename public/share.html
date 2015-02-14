@@ -8,7 +8,7 @@
       font-size: 30px;
     }
     #overlay {
-      background: red;
+      background: rgba(0, 0, 0, 0.5);
       width: 100%;
       height: 100%;
       position: absolute;
@@ -45,8 +45,6 @@
       left: 0;
       width: 100%;
       text-align: center;
-      font-size: 30px;
-      background: black;
       color: white;
       text-align: center;
     }
@@ -87,6 +85,7 @@
       var base_url = 'http://localhost:3000/';
       var newest_pic;
       var action;
+      var refresh_timeout;
 
 
       setInterval(updatePicUrl, 1000);
@@ -102,15 +101,18 @@
       }
 
       function updatePics(p) {
+        if (refresh_timeout) clearTimeout(refresh_timeout);
         $('#link').html('');
         $('#slider').fadeOut();
-        //$('#slides').empty();
-        var slides = $('#slides').children();
-        var j = 1;
-        for (var i=p.length-1; i>=0; i--) {
-          if (j < slides.length) {
-            $(slides[j]).html('<img u="image" src="'+p[i]+'" />');
-            j++;
+        $('#overlay').fadeOut();
+        if (p) {
+          var slides = $('#slides').children();
+          var j = 1;
+          for (var i=p.length-1; i>=0; i--) {
+            if (j < slides.length) {
+              $(slides[j]).html('<img u="image" src="'+p[i]+'" />');
+              j++;
+            }
           }
         }
         slider.$GoTo(0);
@@ -129,6 +131,7 @@
         $('#buttons').fadeOut();
         $('#input').fadeOut();
         $('#link').html('THANK YOU');
+        refresh_timeout = setTimeout(updatePics, 3000);
       }
 
       function doPicAction(endpoint, user) {
@@ -161,8 +164,8 @@
         return false;
       });
 
-      $('input_submit').click(function() {
-        doPicAction(action, $('input_field').val());
+      $('#input_submit').click(function() {
+        doPicAction(action, $('#input_field').val());
       });
 
       $('#input').click(function(){

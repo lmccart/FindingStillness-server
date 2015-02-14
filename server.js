@@ -12,7 +12,7 @@ var imagesnapjs = require('./imagesnap');
 
 
 var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
-var recent_pics = [];
+var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
 
 //// OSC
 var oscServer = new osc.Server(3333, '0.0.0.0');
@@ -146,11 +146,14 @@ var server = app.listen(3000, function () {
   }
 
   function tweetPic(p, u) {
+    if (u[0] !== '@') {
+      u = '@'+u;
+    }
     var tweet = 'hello world';
     fs.readFile(path+p, 'base64', function(err, data) {
       twit.post('media/upload', { media: data }, function (err, data, response) {
         var mediaIdStr = data.media_id_string
-        var params = { status: 'hello world', media_ids: [mediaIdStr] }
+        var params = { status: u+' hello world', media_ids: [mediaIdStr] }
         twit.post('statuses/update', params, function (err, data, response) {
           if (err) console.log(err);
         })
