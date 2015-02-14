@@ -5,20 +5,28 @@
     body {
       font-family: 'Whitney-Book';
       background: black;
+      font-size: 30px;
+    }
+    #overlay {
+      background: red;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top:0;
+      left:0;
+      z-index: -1;
+      display: none;
     }
     #slider {
       width: 100%;
       height: 100%;
-    }
-    #buttons_wrapper {
-      position: absolute;
-      width: 100%;
-      bottom: 200px;
+      z-index: -3;
     }
     #buttons {
       position: relative;
-      margin: 0 auto;
+      margin: 200px auto 0 auto;
       width: 70%;
+      z-index: -2;
     }
     #mail_button {
       float: right;
@@ -27,27 +35,46 @@
       float: left;
     }
     .button {
-      font-size: 30px;
       background: black;
       color: white;
       padding: 25px 20px 15px 20px;
     }
     #link {
-      position: relative;
-      margin: 400px auto 0 auto;
-      width: 50%;
+      position: absolute;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      text-align: center;
       font-size: 30px;
       background: black;
       color: white;
       text-align: center;
+    }
+    #input {
+      margin: 200px auto 0 auto;
+      width: 600px;
+      padding: 20px 20px 50px 20px;
+      background: black;
+      color: white;
+      text-align: center;
+      display: none;
+    }
+    #input_field {
+      width: 500px;
+      font-size: 30px;
+    }
+    #input_submit {
+      background: white;
+      color: black;
+      width: 50px;
+      padding: 10px 7px 5px 7px;
+      display: none;
     }
     </style>
     <script src="js/jquery.js"></script>
     <script src="js/jssor.slider.mini.js"></script>
 
     <script>
-
-    var newest_pic;
 
     $(document).ready(function() {
 
@@ -58,6 +85,10 @@
       var slider = new $JssorSlider$('slider', options);
 
       var base_url = 'http://localhost:3000/';
+      var newest_pic;
+      var action;
+
+
       setInterval(updatePicUrl, 1000);
 
       function updatePicUrl() {
@@ -96,6 +127,7 @@
       function displayEnd(url) {
         $('#slider').fadeOut();
         $('#buttons').fadeOut();
+        $('#input').fadeOut();
         $('#link').html('THANK YOU');
       }
 
@@ -112,11 +144,45 @@
       }
 
       $('#tweet_button').click(function(){
-        doPicAction('tweet_pic', 'laurmccarthy');
+        $('#input_label').html('ENTER YOUR TWITTER USERNAME');
+        $('#input').fadeIn();
+        $('#input_submit').show();
+        $('#overlay').fadeIn();
+        action = 'tweet_pic';
+        return false;
       });
 
       $('#mail_button').click(function(){
-        doPicAction('mail_pic', 'laurmccarthy@gmail.com');
+        $('#input_label').html('ENTER YOUR EMAIL ADDRESS');
+        $('#input').fadeIn();
+        $('#input_submit').hide();
+        $('#overlay').fadeIn();
+        action = 'mail_pic';
+        return false;
+      });
+
+      $('input_submit').click(function() {
+        doPicAction(action, $('input_field').val());
+      });
+
+      $('#input').click(function(){
+        return false;
+      });
+
+      $('#input_field').on('input', function() {
+        var t = $(this).val();
+        if (action == 'mail_pic') {
+          if (t.indexOf('@') !== -1 && t.indexOf('.') !== -1) {
+            $('#input_submit').fadeIn();
+          } else {
+            $('#input_submit').fadeOut();
+          }
+        }
+      });
+
+      $('body').click(function() {
+        $('#overlay').fadeOut();
+        $('#input').fadeOut();
       });
     });
     </script>
@@ -134,7 +200,14 @@
     </div>
   </div>
   <div id='link'></div>
-  <div id='buttons_wrapper'>
+  
+
+  <div id='overlay'></div>
+    <div id='input'>
+      <p id='input_label'>ENTER YOUR EMAIL ADDRESS</p>
+      <input type='text' id='input_field'>
+      <span id='input_submit'>OK</span>
+    </div>
     <div id='buttons'>
       <div id='tweet_button' class='button'>TWEET IT AT ME</div>
       <div id='mail_button' class='button'>EMAIL IT TO ME</div>
