@@ -6,6 +6,7 @@
 1. Install [imagesnap](https://github.com/danyshaanan/imagesnapjs):
   `npm install -g imagesnapjs`
 
+2. Helpful for heroku testing: https://devcenter.heroku.com/articles/config-vars#production-and-development-modes.
 
 ### Running
 
@@ -24,3 +25,4 @@
 * https://github.com/TheAlphaNerd/node-osc
 * https://github.com/danyshaanan/imagesnapjs
 * https://github.com/dropbox/dropbox-js
+
