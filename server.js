@@ -6,7 +6,6 @@ var nodemailer = require('nodemailer');
 var Twit = require('twit');
 var Dropbox = require("dropbox");
 
-var config = require('./config');
 var imagesnapjs = require('./imagesnap');
 
 
@@ -28,23 +27,23 @@ oscClient.send('/oscAddress', 200);
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
-  auth: { user: config.gmail.username, pass: config.gmail.password }
+  auth: { user: process.env.gmail_username, pass: process.env.gmail_password }
 });
 
 
 //// TWITTER
 var twit = new Twit({
-  consumer_key: config.twitter.consumer_key,
-  consumer_secret: config.twitter.consumer_secret,
-  access_token: config.twitter.access_token,
-  access_token_secret: config.twitter.access_token_secret
+  consumer_key: process.env.twitter_consumer_key,
+  consumer_secret: process.env.twitter_consumer_secret,
+  access_token: process.env.twitter_access_token,
+  access_token_secret: process.env.twitter_access_token_secret
 });
 
 
 //// DROPBOX
 var client = new Dropbox.Client({
-  key: config.dropbox.key,
-  token: config.dropbox.token
+  key: process.env.dropbox_key,
+  token: process.env.dropbox_token
 });
 client.authDriver(new Dropbox.AuthDriver.NodeServer(8191));
 client.authenticate(function(err, client) { 

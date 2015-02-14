@@ -7,6 +7,9 @@
   `npm install -g imagesnapjs`
 
 
+### Running
+
+`foreman start`
 
 
 ### Modules & libs
