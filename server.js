@@ -79,7 +79,7 @@ var server = app.listen(process.env.PORT, function () {
   });
 
   app.get('/get_update', function (req, res) {
-    var time_remaining = max(total_time - (new Date().getTime() - start_time), 0);
+    var time_remaining = Math.max(total_time - (new Date().getTime() - start_time), 0);
     res.send({hr: hr, remaining: time_remaining});
   });
 
