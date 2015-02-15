@@ -80,7 +80,7 @@ var server = app.listen(process.env.PORT, function () {
 
   app.get('/get_update', function (req, res) {
     var time_remaining = Math.floor(total_time - (new Date().getTime() - start_time), 0);
-    res.send('h:'+hr+'t:'+time_remaining);
+    res.send({hr: hr, remaining: time_remaining});
   });
 
   app.get('/get_pics', function (req, res) {
