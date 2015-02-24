@@ -73,7 +73,7 @@ var server = app.listen(process.env.PORT, function () {
     hr = parseFloat(req.query.hr);
     oscClient.send('/heartrate', hr);
     if (!running) {
-      //start(); //temp
+      start(); //temp
     }
     res.send('success');
   });
