@@ -127,13 +127,14 @@ function decode(d) {
       //Extract second byte and convert to 8bit unsigned integer
       var u8bytesHr = bytes.buffer.slice(offset, offset + 1);
       var u8Hr = new Uint8Array(u8bytesHr)[0];
-      console.log('u8hr '+u8Hr);
       exports.hr = u8Hr;
       //8 bits takes up 1 byte, so increase offset by one
       offset += 1;
   }
 
   exports.contact = (flag & 0x02) ? true : false;
+
+  console.log('hr '+exports.hr+' contact '+exports.contact);
 }
 
 function cb(error, data) {
