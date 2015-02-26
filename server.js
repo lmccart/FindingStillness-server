@@ -7,8 +7,8 @@ var Twit = require('twit');
 var Dropbox = require("dropbox");
 
 var imagesnapjs = require('./imagesnap');
-
-
+var bluetooth = require('./bluetooth');
+bluetooth.setup(this);
 
 var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
 var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
@@ -67,7 +67,17 @@ var server = app.listen(process.env.PORT, function () {
   var start_time = 0;
   var total_time = 10*1000;
   var running = false;
-  var end_timer, pic_timer;
+  var end_timer, pic_timer, check_interval;
+  var pic_t = 75*1000; // 75s
+  reset();
+
+  function startChecking() {
+    check_interval = setInterval(function() {
+      if (bluetooth.contact) {
+        start();
+      }
+    }, 100);
+  }
 
   app.get('/send_heartrate', function (req, res) {
     hr = parseFloat(req.query.hr);
@@ -79,8 +89,9 @@ var server = app.listen(process.env.PORT, function () {
   });
 
   app.get('/get_update', function (req, res) {
+    var h = bluetooth.hr || hr;
     var time_remaining = Math.max(total_time - (new Date().getTime() - start_time), 0);
-    res.send({hr: hr, remaining: time_remaining});
+    res.send({hr: h, remaining: time_remaining});
   });
 
   app.get('/get_pics', function (req, res) {
@@ -103,6 +114,7 @@ var server = app.listen(process.env.PORT, function () {
 
 
   function start() {
+    clearInterval(check_interval);
     start_time = new Date().getTime();
     running = true;
     end_timer = setTimeout(function() {
@@ -110,7 +122,7 @@ var server = app.listen(process.env.PORT, function () {
     }, total_time);
     pic_timer = setTimeout(function() {
       takePic();
-    }, 3*1000);
+    }, pic_t);
     console.log('Starting at '+start_time);
     oscClient.send('/start');
   }
@@ -120,6 +132,8 @@ var server = app.listen(process.env.PORT, function () {
     clearTimeout(pic_timer);
     start_time = 0;
     running = false;
+    startChecking();
+
   }
 
   function takePic() {
