@@ -26,3 +26,7 @@
 * https://github.com/danyshaanan/imagesnapjs
 * https://github.com/dropbox/dropbox-js
 
+#### Etc
+* http://nginx.org/en/docs/install.html
+* http://learnaholic.me/2012/10/10/installing-nginx-in-mac-os-x-mountain-lion/
+* http://www.hacksparrow.com/keep-node-js-script-running-after-logging-out-from-shell.html

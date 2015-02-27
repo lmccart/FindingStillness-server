@@ -4,29 +4,29 @@
     <script src="js/jquery.js"></script>
     <script>
 
-    $(document).ready(function() {
-      var url = 'http://localhost:3000/send_heartrate';
-      $.ajax({
-        type: 'GET',
-        url: url,
-        data: {hr: 20},
-        success: function(data) {
-          console.log('suc')
-          console.log(data);
-        }
-      });
+    // $(document).ready(function() {
+    //   var url = 'http://localhost:3000/send_heartrate';
+    //   $.ajax({
+    //     type: 'GET',
+    //     url: url,
+    //     data: {hr: 20},
+    //     success: function(data) {
+    //       console.log('suc')
+    //       console.log(data);
+    //     }
+    //   });
 
-      url = 'http://localhost:3000/get_update';
-      $.ajax({
-        type: 'GET',
-        url: url,
-        success: function(data) {
-          console.log('suc')
-          console.log(data);
+    //   url = 'http://localhost:3000/get_update';
+    //   $.ajax({
+    //     type: 'GET',
+    //     url: url,
+    //     success: function(data) {
+    //       console.log('suc')
+    //       console.log(data);
 
-        }
-      });
-    });
+    //     }
+    //   });
+    // });
     </script>
       
   </head>

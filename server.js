@@ -79,12 +79,20 @@ var server = app.listen(process.env.PORT, function () {
     }, 100);
   }
 
+  app.get('/start', function (req, res) {
+    oscClient.send('/heartrate', 60);
+    if (!running) {
+      start();
+    }
+    res.send('success');
+  });
+
   app.get('/send_heartrate', function (req, res) {
     hr = parseFloat(req.query.hr);
     oscClient.send('/heartrate', hr);
-    if (!running) {
-      start(); //temp
-    }
+    // if (!running) {
+    //   start(); //temp
+    // }
     res.send('success');
   });
 
@@ -111,6 +119,11 @@ var server = app.listen(process.env.PORT, function () {
     mailPic(p, e);
     res.send({url: p}); //pend
   });
+
+  app.get('/take_pic', function(req, res) {
+    takePic();
+    res.send({});
+  })
 
 
   function start() {
@@ -146,7 +159,7 @@ var server = app.listen(process.env.PORT, function () {
     });
   }
 
-  function dropboxPic(p) {
+  function dropboxPic(p, cb) {
     fs.readFile(path+p, function(err, data) {
       if (err) {
         console.log(err);
@@ -154,6 +167,13 @@ var server = app.listen(process.env.PORT, function () {
       }
       client.writeFile(p.substring(5), data, function(err, stat) {
         if (err) console.log(err);
+        // else {
+        //   client.makeUrl(stat.path, {downloadHack: false}, function(error, data) {
+        //     if (error) console.log(error); // Something went wrong.
+        //     //else cb(data.url);
+        //     mailPic(data.url, 'laurmccarthy@gmail.com');
+        //   });
+        // }
       });
     });
   }
@@ -175,6 +195,7 @@ var server = app.listen(process.env.PORT, function () {
   }
 
   function mailPic(p, e) {
+    //var html = '<a href="http://twitter.com/intent/tweet?url='+db_p+'&text=@Delta helped me discover %23StillnessInMotion at %23TED2015" target="_blank">Tweet</a>';
     var mailOptions = {
       from: 'lo <laurmccarthy@gmail.com>',
       to: e,
