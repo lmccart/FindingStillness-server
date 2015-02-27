@@ -7,8 +7,8 @@ var Twit = require('twit');
 var Dropbox = require("dropbox");
 
 var imagesnapjs = require('./imagesnap');
-var bluetooth = require('./bluetooth');
-bluetooth.setup(this);
+//var bluetooth = require('./bluetooth');
+//bluetooth.setup(this);
 
 var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
 var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
@@ -73,9 +73,9 @@ var server = app.listen(process.env.PORT, function () {
 
   function startChecking() {
     check_interval = setInterval(function() {
-      if (bluetooth.contact) {
-        start();
-      }
+      // if (bluetooth.contact) {
+      //   start();
+      // }
     }, 100);
   }
 
@@ -97,7 +97,7 @@ var server = app.listen(process.env.PORT, function () {
   });
 
   app.get('/get_update', function (req, res) {
-    var h = bluetooth.hr || hr;
+    var h = hr;//bluetooth.hr || hr;
     var time_remaining = Math.max(total_time - (new Date().getTime() - start_time), 0);
     res.send({hr: h, remaining: time_remaining});
   });
