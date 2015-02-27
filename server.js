@@ -65,10 +65,11 @@ var server = app.listen(process.env.PORT, function () {
 
   var hr = 0;
   var start_time = 0;
-  var total_time = 10*1000;
+  var total_time = 90*1000;
   var running = false;
   var end_timer, pic_timer, check_interval;
   var pic_t = 75*1000; // 75s
+  var off_interval = 30*1000;
   reset();
 
   function startChecking() {
@@ -83,16 +84,15 @@ var server = app.listen(process.env.PORT, function () {
     oscClient.send('/heartrate', 60);
     if (!running) {
       start();
+      res.send('success');
+    } else {
+      res.send('still running');
     }
-    res.send('success');
   });
 
   app.get('/send_heartrate', function (req, res) {
     hr = parseFloat(req.query.hr);
     oscClient.send('/heartrate', hr);
-    // if (!running) {
-    //   start(); //temp
-    // }
     res.send('success');
   });
 
@@ -132,7 +132,7 @@ var server = app.listen(process.env.PORT, function () {
     running = true;
     end_timer = setTimeout(function() {
       reset();
-    }, total_time);
+    }, total_time+off_interval); //off at end to prevent contact retouch
     pic_timer = setTimeout(function() {
       takePic();
     }, pic_t);
@@ -146,7 +146,6 @@ var server = app.listen(process.env.PORT, function () {
     start_time = 0;
     running = false;
     startChecking();
-
   }
 
   function takePic() {
