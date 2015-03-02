@@ -7,3 +7,4 @@ public/pics/*
 config.js
 .env
 .env-old
+*.log
