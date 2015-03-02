@@ -181,11 +181,11 @@ var server = app.listen(process.env.PORT, function () {
     if (u[0] !== '@') {
       u = '@'+u;
     }
-    var tweet = 'hello world';
+    var tweet = '#StillnessInMotion at #TED2015';
     fs.readFile(path+p, 'base64', function(err, data) {
       twit.post('media/upload', { media: data }, function (err, data, response) {
         var mediaIdStr = data.media_id_string
-        var params = { status: u+' hello world', media_ids: [mediaIdStr] }
+        var params = { status: u+' '+tweet, media_ids: [mediaIdStr] }
         twit.post('statuses/update', params, function (err, data, response) {
           if (err) console.log(err);
         })
@@ -196,10 +196,10 @@ var server = app.listen(process.env.PORT, function () {
   function mailPic(p, e) {
     //var html = '<a href="http://twitter.com/intent/tweet?url='+db_p+'&text=@Delta helped me discover %23StillnessInMotion at %23TED2015" target="_blank">Tweet</a>';
     var mailOptions = {
-      from: 'lo <laurmccarthy@gmail.com>',
+      from: 'Delta at TED 2015 <photos@delta.com>',
       to: e,
-      subject: 'Hello',
-      html: '<b>Hello world</b>',
+      subject: 'Your photo from Delta at TED 2015',
+      html: '<img src="path+p"/><p>Hello from Delta at TED 2015.</p>',
       attachments:[{ filename: p.substring(5), path: path+p }],
     };
     // send mail with defined transport object
