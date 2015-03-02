@@ -3,7 +3,8 @@
   <head>
     <style>
     body {
-      font-family: 'WhitneyCondensed-Semibold';
+      font-family: 'WhitneyCondensed-Semibold', 'WhitneyCondensed'; 
+      src: local('WhitneyCondensed-Semibold');
       background: black;
       font-size: 40px;
     }
@@ -45,7 +46,7 @@
       background: white;
       color: #ACACAC;
       border: 2px solid #ACACAC;
-      padding: 20px 20px 10px 20px;
+      padding: 15px 20px 15px 20px;
       width: 200px;
       text-align: center;
       cursor: pointer;
@@ -61,18 +62,24 @@
       font-size: 72px;
       display: none;
     }
+    .hashtag {
+      font-family: 'WhitneyCondensed-Medium', 'WhitneyCondensed';
+      src: local('WhitneyCondensed-Medium');
+    }
     #input {
       color: #ACACAC;
       text-align: center;
       display: none;
       width: 900px !important;
       font-size: 24px;
+      margin: 400px auto 0 auto !important;
     }
     #input_field {
       width: 545px;
       font-size: 40px;
       float: center;
-      font-family: 'WhitneyCondensed-Semibold';
+      font-family: 'WhitneyCondensed-Semibold', 'WhitneyCondensed';
+      src: local('WhitneyCondensed-Semibold');
       background: #ACACAC;
       color: white;
       padding: 18px 20px 12px 20px;
@@ -110,7 +117,7 @@
       };
       var slider = new $JssorSlider$('slider', options);
 
-      var base_url = 'http://localhost:3000/';
+      var base_url = 'http://192.168.3.1:3000/';
       var newest_pic;
       var action;
       var refresh_timeout;
@@ -237,7 +244,7 @@
       <div></div>
     </div>
   </div>
-  <div id='thanks'><p>THANK YOU FOR SHARING<br>YOUR STILLEST MOMENT.</p>__<p style='font-family:WhitneyCondensed-Medium'>#StillnessInMotion</p></div>
+  <div id='thanks'><p>THANK YOU FOR SHARING<br>YOUR STILLEST MOMENT.</p>__<p class='hashtag'>#StillnessInMotion</p></div>
   <img id='logo' src='logo-trans-01.png'/>
 
   <div id='overlay'></div>
