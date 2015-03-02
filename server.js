@@ -41,6 +41,7 @@ var client = new Dropbox.Client({
 client.authDriver(new Dropbox.AuthDriver.NodeServer(8191));
 client.authenticate(function(err, client) { 
   if (err) console.log(err);
+  else console.log('Dropbox authenticated');
 });
 
 var app = express();
@@ -110,7 +111,7 @@ var server = app.listen(process.env.PORT, function () {
 
   app.get('/get_update', function (req, res) {
     var h = hr;//bluetooth.hr || hr;
-    var time_remaining = Math.max(total_time - (new Date().getTime() - start_time), 0);
+    var time_remaining = running ? Math.max(total_time - (new Date().getTime() - start_time), 0) : -1;
     res.send({hr: h, remaining: time_remaining});
   });
 
@@ -177,14 +178,8 @@ var server = app.listen(process.env.PORT, function () {
         return;
       }
       client.writeFile(p.substring(5), data, function(err, stat) {
+        console.log(p.substring(5));
         if (err) console.log(err);
-        // else {
-        //   client.makeUrl(stat.path, {downloadHack: false}, function(error, data) {
-        //     if (error) console.log(error); // Something went wrong.
-        //     //else cb(data.url);
-        //     mailPic(data.url, 'laurmccarthy@gmail.com');
-        //   });
-        // }
       });
     });
   }
