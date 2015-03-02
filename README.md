@@ -4,12 +4,14 @@
 0. `npm install`
 
 1. Install [imagesnap](https://github.com/danyshaanan/imagesnapjs):
-  `npm install -g imagesnapjs`
+  `sudo npm install -g imagesnapjs`
+  
+2. Make sure to fill out the `.env-sample` and rename it to `.env`.
 
-2. Install expressjs:
+3. Install expressjs:
   `npm install express -g`
 
-3. Helpful for heroku testing: https://devcenter.heroku.com/articles/config-vars#production-and-development-modes.
+4. Helpful for heroku testing: https://devcenter.heroku.com/articles/config-vars#production-and-development-modes.
 
 ### Running
 

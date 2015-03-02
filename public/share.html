@@ -3,12 +3,12 @@
   <head>
     <style>
     body {
-      font-family: 'Whitney-Book';
+      font-family: 'WhitneyCondensed-Semibold';
       background: black;
-      font-size: 30px;
+      font-size: 40px;
     }
     #overlay {
-      background: rgba(0, 0, 0, 0.5);
+      background: white;
       width: 100%;
       height: 100%;
       position: absolute;
@@ -22,11 +22,12 @@
       height: 100%;
       z-index: -3;
     }
-    #buttons {
+    #option_buttons, #input {
       position: relative;
-      margin: 200px auto 0 auto;
-      width: 70%;
-      z-index: -2;
+      margin: 500px auto 0 auto;
+      width: 770px;
+      z-index: 0;
+      display: none;
     }
     #mail_button {
       float: right;
@@ -34,38 +35,65 @@
     #tweet_button {
       float: left;
     }
-    .button {
-      background: black;
-      color: white;
-      padding: 25px 20px 15px 20px;
-    }
-    #link {
+
+    #share_button {
       position: absolute;
-      top: 100px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: white;
-      text-align: center;
+      right: 45px;
+      bottom: 45px;
     }
-    #input {
-      margin: 200px auto 0 auto;
-      width: 600px;
-      padding: 20px 20px 50px 20px;
-      background: black;
-      color: white;
+    .button {
+      background: white;
+      color: #ACACAC;
+      border: 2px solid #ACACAC;
+      padding: 20px 20px 10px 20px;
+      width: 200px;
       text-align: center;
+      cursor: pointer;
+      font-size: 40px;
+    }
+    #thanks {
+      position: relative;
+      margin: 300px auto 0 auto;
+      width: 770px;
+      z-index: 0;
+      text-align: center;
+      color: #ACACAC;
+      font-size: 72px;
       display: none;
     }
+    #input {
+      color: #ACACAC;
+      text-align: center;
+      display: none;
+      width: 900px !important;
+      font-size: 24px;
+    }
     #input_field {
-      width: 500px;
-      font-size: 30px;
+      width: 545px;
+      font-size: 40px;
+      float: center;
+      font-family: 'WhitneyCondensed-Semibold';
+      background: #ACACAC;
+      color: white;
+      padding: 18px 20px 12px 20px;
+      border: 2px solid #ACACAC;
+
     }
     #input_submit {
-      background: white;
-      color: black;
-      width: 50px;
-      padding: 10px 7px 5px 7px;
+      float: right;
+    }
+    #back {
+      float: left;
+    }
+    #input_submit, #back {
+      width: 90px;
+    }
+
+    #logo {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
       display: none;
     }
     </style>
@@ -102,9 +130,8 @@
 
       function updatePics(p) {
         if (refresh_timeout) clearTimeout(refresh_timeout);
-        $('#link').html('');
+        resetButtons();
         $('#slider').fadeOut();
-        $('#overlay').fadeOut();
         if (p) {
           var slides = $('#slides').children();
           var j = 1;
@@ -117,7 +144,6 @@
         }
         slider.$GoTo(0);
         $('#slider').fadeIn();
-        $('#buttons').fadeIn();
       }
 
       function getCurrentImg() {
@@ -126,12 +152,22 @@
         return $(slides[n+1]).children()[0];
       }
 
+      function resetButtons() {
+        $('#thanks').fadeOut();
+        $('#logo').fadeOut();
+        $('#overlay').fadeOut();
+        $('#option_buttons').hide();
+        $('#input').hide();
+        $('#share_button').fadeIn();
+        $('#input_field').val('');
+      }
+
       function displayEnd(url) {
-        $('#slider').fadeOut();
-        $('#buttons').fadeOut();
         $('#input').fadeOut();
-        $('#link').html('THANK YOU');
-        refresh_timeout = setTimeout(updatePics, 3000);
+        $('#thanks').fadeIn();
+        $('#logo').fadeIn();
+        $('#overlay').fadeTo(400, 0.9);
+        refresh_timeout = setTimeout(updatePics, 10000);
       }
 
       function doPicAction(endpoint, user) {
@@ -146,20 +182,25 @@
         }
       }
 
+      $('#share_button').click(function() {
+        $('#share_button').fadeOut();
+        $('#option_buttons').fadeIn();
+        $('#overlay').fadeTo(400, 0.75);
+        return false;
+      });
+
       $('#tweet_button').click(function(){
+        $('#option_buttons').hide();
         $('#input_label').html('ENTER YOUR TWITTER USERNAME');
         $('#input').fadeIn();
-        $('#input_submit').show();
-        $('#overlay').fadeIn();
         action = 'tweet_pic';
         return false;
       });
 
       $('#mail_button').click(function(){
+        $('#option_buttons').fadeOut();
         $('#input_label').html('ENTER YOUR EMAIL ADDRESS');
         $('#input').fadeIn();
-        $('#input_submit').hide();
-        $('#overlay').fadeIn();
         action = 'mail_pic';
         return false;
       });
@@ -172,29 +213,23 @@
         return false;
       });
 
-      $('#input_field').on('input', function() {
-        var t = $(this).val();
-        if (action == 'mail_pic') {
-          if (t.indexOf('@') !== -1 && t.indexOf('.') !== -1) {
-            $('#input_submit').fadeIn();
-          } else {
-            $('#input_submit').fadeOut();
-          }
-        }
+      $('#back').click(function() {
+        $('#option_buttons').fadeIn();
+        $('#input').hide();
+        $('#input_field').val('');
       });
 
       $('body').click(function() {
-        $('#overlay').fadeOut();
-        $('#input').fadeOut();
+        resetButtons();
       });
     });
     </script>
       
   </head>
   <body>
-  <div id='slider' style='position: absolute; top: 0px; left: 0px; width: 1024px;
-    height: 768px;'>
-    <div id='slides' u='slides' style='cursor: move; position: absolute; left: 0px; top: 0px; width: 1024px; height: 768px; overflow: hidden;'>
+  <div id='slider' style='position: absolute; top: 0px; left: 0px; width: 1920px;
+    height: 1080px;'>
+    <div id='slides' u='slides' style='cursor: move; position: absolute; left: 0px; top: 0px; width: 1920px; height: 1080px; overflow: hidden;'>
       <div></div>
       <div></div>
       <div></div>
@@ -202,18 +237,22 @@
       <div></div>
     </div>
   </div>
-  <div id='link'></div>
-  
+  <div id='thanks'><p>THANK YOU FOR SHARING<br>YOUR STILLEST MOMENT.</p>__<p style='font-family:WhitneyCondensed-Medium'>#StillnessInMotion</p></div>
+  <img id='logo' src='logo-trans-01.png'/>
 
   <div id='overlay'></div>
+
     <div id='input'>
       <p id='input_label'>ENTER YOUR EMAIL ADDRESS</p>
+      <span id='back' class='button'>BACK</span>
       <input type='text' id='input_field'>
-      <span id='input_submit'>OK</span>
+      <span id='input_submit' class='button'>OK</span>
     </div>
-    <div id='buttons'>
-      <div id='tweet_button' class='button'>TWEET IT AT ME</div>
-      <div id='mail_button' class='button'>EMAIL IT TO ME</div>
+
+    <div id='share_button' class='button'>SHARE</div>
+    <div id='option_buttons'>
+      <div id='tweet_button' class='button'>TWEET</div>
+      <div id='mail_button' class='button'>EMAIL</div>
     </div>
   </div>
   </body>
