@@ -58,20 +58,6 @@
       font-size: 48px;
       border-radius: 14px;
     }
-    #thanks {
-      position: relative;
-      margin: 300px auto 0 auto;
-      width: 770px;
-      z-index: 0;
-      text-align: center;
-      color: #B3B1B1;
-      font-size: 72px;
-      display: none;
-    }
-    .hashtag {
-      font-family: 'WhitneyCondensed-Medium', 'WhitneyCondensed';
-      src: local('WhitneyCondensed-Medium');
-    }
     #input {
       color: #ACACAC;
       text-align: center;
@@ -113,9 +99,9 @@
       width: 200px;
     }
 
-    #logo {
+    #thanks {
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
       z-index: 2;
       display: none;
@@ -178,7 +164,6 @@
 
       function resetButtons() {
         $('#thanks').fadeOut();
-        $('#logo').fadeOut();
         $('#overlay').fadeOut();
         $('#option_buttons').hide();
         $('#input').hide();
@@ -189,7 +174,6 @@
       function displayEnd(url) {
         $('#input').fadeOut();
         $('#thanks').fadeIn();
-        $('#logo').fadeIn();
         $('#overlay').fadeTo(400, 0.9);
         refresh_timeout = setTimeout(updatePics, 10000);
       }
@@ -265,8 +249,7 @@
       <div></div>
     </div>
   </div>
-  <div id='thanks'><p>THANK YOU FOR SHARING<br>YOUR STILLEST MOMENT.</p>__<p class='hashtag'>#StillnessInMotion</p></div>
-  <img id='logo' src='logo-trans-01.png'/>
+  <img id='thanks' src='endpage1.png'/>
 
   <div id='overlay'></div>
 
