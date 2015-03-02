@@ -6,7 +6,10 @@
 1. Install [imagesnap](https://github.com/danyshaanan/imagesnapjs):
   `npm install -g imagesnapjs`
 
-2. Helpful for heroku testing: https://devcenter.heroku.com/articles/config-vars#production-and-development-modes.
+2. Install expressjs:
+  `npm install express -g`
+
+3. Helpful for heroku testing: https://devcenter.heroku.com/articles/config-vars#production-and-development-modes.
 
 ### Running
 

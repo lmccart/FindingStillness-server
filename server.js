@@ -10,18 +10,11 @@ var imagesnapjs = require('./imagesnap');
 //var bluetooth = require('./bluetooth');
 //bluetooth.setup(this);
 
-var path = '/Users/lmccart/Documents/stillness/FS_server/public/';
+var path = '/usr/local/var/www/';
 var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
 
 //// OSC
-var oscServer = new osc.Server(3333, '0.0.0.0');
-oscServer.on("message", function (msg, rinfo) {
-  console.log("TUIO message:");
-  console.log(msg);
-});
-
 var oscClient = new osc.Client('127.0.0.1', 3333);
-oscClient.send('/oscAddress', 200);
 
 //// MAILER
 // create reusable transporter object using SMTP transport
@@ -55,6 +48,25 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
+// Add headers
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
 
 var server = app.listen(process.env.PORT, function () {
 
