@@ -199,7 +199,7 @@ var server = app.listen(process.env.PORT, function () {
       from: 'Delta at TED 2015 <photos@delta.com>',
       to: e,
       subject: 'Your photo from Delta at TED 2015',
-      html: '<img src="path+p"/><p>Hello from Delta at TED 2015.</p>',
+      html: '<p>Here is your photo from #StillnessInMotion from Delta at TED 2015.</p>',
       attachments:[{ filename: p.substring(5), path: path+p }],
     };
     // send mail with defined transport object
