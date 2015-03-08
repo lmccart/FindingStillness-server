@@ -10,19 +10,51 @@
     }
 
     #container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+      width: 500px;
     }
 
-    #reset {
+    #reset, #start, #send_hr {
       background: white;
-      padding: 30px;
-      margin: 200px auto;
-      width: 150px;
+      padding: 10px;
+      width: 180px;
+      margin: 30px 0 0 30px;
       text-align: center;
+      cursor: pointer;
     }
+
+    #hr_input {
+      font-family: 'WhitneyCondensed-Semibold', 'WhitneyCondensed'; 
+      src: local('WhitneyCondensed-Semibold');
+      font-size: 48px;
+      height: 72px;
+      width: 80px;
+      margin: 30px 0 0 30px;
+      padding: 0 10px;
+      border: none;
+      color: black;
+      float: left;
+    }
+
+    #send_hr {
+
+      float: left;
+    }
+
+    #hr, #status {
+      color: white;
+    }
+
+    #stats {
+      padding: 30px;
+      width: 600px;
+    }
+
+    #thumbnail {
+      width: 160px;
+      float: right;
+      padding: 12px 0 0 0;
+    }
+
     </style>
     <script src="js/jquery.js"></script>
 
@@ -36,23 +68,55 @@
           console.log(data);
         });
       });
-    });
 
-
-    $(document).ready(function() {
       $('#start').click(function() {
         $.getJSON(base_url+'start', function(data) {
           console.log(data);
         });
       });
+
+      $('#send_hr').click(function() {
+        var hr = $('#hr_input').val();
+        $.getJSON(base_url+'send_heartrate?hr='+hr, function(data) {
+          console.log(data);
+        });
+        $('#hr_input').val('');
+      });
+
+      setInterval(function() {
+        $.getJSON(base_url+'get_update', function(data) {
+          console.log(data);
+          $('#hr').html('HR: '+data.hr);
+          if (data.remaining == -1) {
+            $('#status').html('Not currently running.');
+          } else {
+            $('#status').html('Remaining: '+Math.floor(data.remaining/1000));
+          }
+        });
+
+        $.getJSON(base_url+'get_pics', function(data) {
+          console.log(data);
+          var n = data.pics[data.pics.length-1];
+          $('#thumbnail').attr('src', n);
+        });
+
+      }, 1000);
     });
+
+
     </script>
       
   </head>
   <body>
   <div id='container'>
+    <div id='stats'>
+      <img id='thumbnail' src=''/>
+      <div id='status'></div>
+      <div id='hr'></div>
+    </div>
     <div id='reset'>RESET</div>
-    <div id='reset'>START</div>
+    <div id='start'>START</div>
+    <div><input id='hr_input' type='text'><div id='send_hr'>SEND HR</div></div>
   </div>
   </body>
 </html>

@@ -18,6 +18,14 @@
 `foreman start`
 
 
+### Views
+
+* BA page is at `/`
+* Share page is at `/share.html`
+* Controller is at `/controller.html`
+
+
+
 ### Modules & libs
 
 #### Frontend

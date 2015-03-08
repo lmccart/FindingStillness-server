@@ -141,7 +141,8 @@ var server = app.listen(process.env.PORT, function () {
     pic_timer = setTimeout(function() {
       takePic();
     }, pic_t);
-    oscClient.send('/heartrate', 60);
+    hr = 60;
+    oscClient.send('/heartrate', hr);
     oscClient.send('/start');
     console.log('Starting at '+start_time);
   }
