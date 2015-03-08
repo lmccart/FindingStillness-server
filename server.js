@@ -7,8 +7,6 @@ var Twit = require('twit');
 var Dropbox = require("dropbox");
 
 var imagesnapjs = require('./imagesnap');
-//var bluetooth = require('./bluetooth');
-//bluetooth.setup(this);
 
 var path = '/usr/local/var/www/';
 var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
@@ -80,39 +78,34 @@ var server = app.listen(process.env.PORT, function () {
   var start_time = 0;
   var total_time = 90*1000;
   var running = false;
-  var end_timer, pic_timer, check_interval;
+  var end_timer, pic_timer;
   var pic_t = 75*1000; // 75s
   var off_interval = 30*1000;
   reset();
 
-  function startChecking() {
-    check_interval = setInterval(function() {
-      // if (bluetooth.contact) {
-      //   start();
-      // }
-    }, 100);
-  }
-
   app.get('/start', function (req, res) {
-    oscClient.send('/heartrate', 60);
     if (!running) {
       start();
-      res.send('success');
+      res.send({status:'success'});
     } else {
-      res.send('still running');
+      res.send({status:'still running'});
     }
+  });
+
+  app.get('/reset', function(req, res) {
+    oscClient.send('/reset');
+    res.send({status:'success'});
   });
 
   app.get('/send_heartrate', function (req, res) {
     hr = parseFloat(req.query.hr);
     oscClient.send('/heartrate', hr);
-    res.send('success');
+    res.send({status:'success'});
   });
 
   app.get('/get_update', function (req, res) {
-    var h = hr;//bluetooth.hr || hr;
     var time_remaining = running ? Math.max(total_time - (new Date().getTime() - start_time), 0) : -1;
-    res.send({hr: h, remaining: time_remaining});
+    res.send({hr: hr, remaining: time_remaining});
   });
 
   app.get('/get_pics', function (req, res) {
@@ -140,7 +133,6 @@ var server = app.listen(process.env.PORT, function () {
 
 
   function start() {
-    clearInterval(check_interval);
     start_time = new Date().getTime();
     running = true;
     end_timer = setTimeout(function() {
@@ -149,8 +141,9 @@ var server = app.listen(process.env.PORT, function () {
     pic_timer = setTimeout(function() {
       takePic();
     }, pic_t);
-    console.log('Starting at '+start_time);
+    oscClient.send('/heartrate', 60);
     oscClient.send('/start');
+    console.log('Starting at '+start_time);
   }
 
   function reset() {
@@ -158,7 +151,6 @@ var server = app.listen(process.env.PORT, function () {
     clearTimeout(pic_timer);
     start_time = 0;
     running = false;
-    startChecking();
   }
 
   function takePic() {

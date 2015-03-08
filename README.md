@@ -30,6 +30,7 @@
 * https://github.com/TheAlphaNerd/node-osc
 * https://github.com/danyshaanan/imagesnapjs
 * https://github.com/dropbox/dropbox-js
+* https://github.com/eugeneware/gifencoder
 
 #### Etc
 * http://nginx.org/en/docs/install.html

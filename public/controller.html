@@ -37,12 +37,22 @@
         });
       });
     });
+
+
+    $(document).ready(function() {
+      $('#start').click(function() {
+        $.getJSON(base_url+'start', function(data) {
+          console.log(data);
+        });
+      });
+    });
     </script>
       
   </head>
   <body>
   <div id='container'>
     <div id='reset'>RESET</div>
+    <div id='reset'>START</div>
   </div>
   </body>
 </html>
