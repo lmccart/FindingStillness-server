@@ -13,7 +13,7 @@
       width: 500px;
     }
 
-    #reset, #start, #send_hr {
+    #reset, #start, #send_hr, #idle {
       background: white;
       padding: 10px;
       width: 180px;
@@ -75,6 +75,12 @@
         });
       });
 
+      $('#idle').click(function() {
+        $.getJSON(base_url+'idle', function(data) {
+          console.log(data);
+        });
+      });
+
       $('#send_hr').click(function() {
         var hr = $('#hr_input').val();
         $.getJSON(base_url+'send_heartrate?hr='+hr, function(data) {
@@ -85,7 +91,6 @@
 
       setInterval(function() {
         $.getJSON(base_url+'get_update', function(data) {
-          console.log(data);
           $('#hr').html('HR: '+data.hr);
           if (data.remaining == -1) {
             $('#status').html('Not currently running.');
@@ -95,7 +100,6 @@
         });
 
         $.getJSON(base_url+'get_pics', function(data) {
-          console.log(data);
           var n = data.pics[data.pics.length-1];
           $('#thumbnail').attr('src', n);
         });
@@ -116,6 +120,7 @@
     </div>
     <div id='reset'>RESET</div>
     <div id='start'>START</div>
+    <div id='idle'>IDLE</div>
     <div><input id='hr_input' type='text'><div id='send_hr'>SEND HR</div></div>
   </div>
   </body>

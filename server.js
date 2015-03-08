@@ -93,7 +93,12 @@ var server = app.listen(process.env.PORT, function () {
   });
 
   app.get('/reset', function(req, res) {
-    oscClient.send('/reset');
+    reset();
+    res.send({status:'success'});
+  });
+
+  app.get('/idle', function(req, res) {
+    oscClient.send('/idle');
     res.send({status:'success'});
   });
 
@@ -152,6 +157,7 @@ var server = app.listen(process.env.PORT, function () {
     clearTimeout(pic_timer);
     start_time = 0;
     running = false;
+    oscClient.send('/reset');
   }
 
   function takePic() {
