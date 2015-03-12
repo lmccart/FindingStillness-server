@@ -13,13 +13,17 @@
       width: 500px;
     }
 
-    #reset, #start, #send_hr, #idle {
+    #reset, #start, #send_hr, #idle, #take_pic {
       background: white;
       padding: 10px;
       width: 180px;
       margin: 30px 0 0 30px;
       text-align: center;
       cursor: pointer;
+    }
+
+    #take_pic {
+      margin-top: 130px !important;
     }
 
     #hr_input {
@@ -75,6 +79,12 @@
         });
       });
 
+      $('#take_pic').click(function() {
+        $.getJSON(base_url+'take_pic', function(data) {
+          console.log(data);
+        });
+      });
+
       $('#idle').click(function() {
         $.getJSON(base_url+'idle', function(data) {
           console.log(data);
@@ -118,10 +128,10 @@
       <div id='status'></div>
       <div id='hr'></div>
     </div>
-    <div id='reset'>RESET</div>
     <div id='start'>START</div>
     <div id='idle'>IDLE</div>
-    <div><input id='hr_input' type='text'><div id='send_hr'>SEND HR</div></div>
+    <div><input id='hr_input' type='text'><div id='send_hr'>SEND HR</div></div>    
+    <div id='take_pic'>TAKE_PIC</div>
   </div>
   </body>
 </html>

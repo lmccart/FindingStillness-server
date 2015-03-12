@@ -1,8 +1,9 @@
 var fs = require('fs');
+var http = require('http');
+
 var express = require('express');
 var osc = require('node-osc');
 
-var nodemailer = require('nodemailer');
 var Twit = require('twit');
 var Dropbox = require("dropbox");
 
@@ -14,12 +15,6 @@ var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/142
 //// OSC
 var oscClient = new osc.Client('127.0.0.1', 3333);
 
-//// MAILER
-// create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: { user: process.env.gmail_username, pass: process.env.gmail_password }
-});
 
 
 //// TWITTER
@@ -200,19 +195,11 @@ var server = app.listen(process.env.PORT, function () {
   }
 
   function mailPic(p, e) {
-    //var html = '<a href="http://twitter.com/intent/tweet?url='+db_p+'&text=@Delta helped me discover %23StillnessInMotion at %23TED2015" target="_blank">Tweet</a>';
-    var mailOptions = {
-      from: 'Delta at TED 2015 <photos@delta.com>',
-      to: e,
-      subject: 'Your photo from Delta at TED 2015',
-      html: '<p>Here is your photo from #StillnessInMotion from Delta at TED 2015.</p>',
-      attachments:[{ filename: p.substring(5), path: path+p }],
-    };
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(err, info){
-      if(err) console.log(err);
-      else console.log('Message sent: ' + info.response);
+    var url = 'http://deltastillnessinmotion.com/share/send_mail.php?to='+e+'&photo='+p;
+    request(url, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
     });
   }
-
-})
+});
