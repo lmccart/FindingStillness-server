@@ -28,7 +28,7 @@
 
     <script>
 
-    var base_url = 'http://localhost:3000/';//'http://192.168.3.1:3000/';
+    var base_url = 'http://stillness.local:3000/';
 
     $(document).ready(function() {
       $('#reset').click(function() {
@@ -36,6 +36,13 @@
           console.log(data);
         });
       });
+
+      $('#start').click(function() {
+        $.getJSON(base_url+'start', function(data) {
+          console.log(data);
+        });
+      });
+
     });
     </script>
       
@@ -43,6 +50,7 @@
   <body>
   <div id='container'>
     <div id='reset'>RESET</div>
+    <div id='start'>START</div>
   </div>
   </body>
 </html>
