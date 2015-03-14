@@ -182,11 +182,11 @@ var server = app.listen(process.env.PORT, function () {
     if (u[0] !== '@') {
       u = '@'+u;
     }
-    var tweet = '#StillnessInMotion at #TED2015';
+    var tweet = ' #StillnessInMotion at #TED2015';
     fs.readFile(path+p, 'base64', function(err, data) {
       twit.post('media/upload', { media: data }, function (err, data, response) {
         var mediaIdStr = data.media_id_string
-        var params = { status: u+' '+tweet, media_ids: [mediaIdStr] }
+        var params = { status: u+tweet, media_ids: [mediaIdStr] }
         twit.post('statuses/update', params, function (err, data, response) {
           if (err) console.log(err);
         })
