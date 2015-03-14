@@ -1,5 +1,7 @@
 var fs = require('fs');
 var http = require('http');
+var request = require('request');
+var domain = require('domain');
 
 var express = require('express');
 var osc = require('node-osc');
@@ -195,7 +197,8 @@ var server = app.listen(process.env.PORT, function () {
   }
 
   function mailPic(p, e) {
-    var url = 'http://deltastillnessinmotion.com/share/send_mail.php?to='+e+'&photo='+p;
+    var url = 'http://deltastillnessinmotion.com/share/send_mail.php?to='+e+'&photo='+p.substring(5);
+    console.log(url);
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         console.log(body);
