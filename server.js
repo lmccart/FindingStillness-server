@@ -1,5 +1,7 @@
 var fs = require('fs');
 var http = require('http');
+var request = require('request');
+var domain = require('domain');
 
 var express = require('express');
 var osc = require('node-osc');
@@ -39,6 +41,14 @@ client.authenticate(function(err, client) {
   if (err) console.log(err);
   else console.log('Dropbox authenticated');
 });
+
+
+// uncaught error handling
+var d = domain.create();
+d.on('error', function(err) {
+  console.error('DOMAIN ERROR caught and handled: '+err);
+});
+
 
 var app = express();
 
@@ -136,18 +146,20 @@ var server = app.listen(config.PORT, function () {
 
 
   function start() {
-    start_time = new Date().getTime();
-    running = true;
-    end_timer = setTimeout(function() {
-      reset();
-    }, total_time+off_interval); //off at end to prevent contact retouch
-    pic_timer = setTimeout(function() {
-      takePic();
-    }, pic_t);
-    hr = 60;
-    oscClient.send('/heartrate', hr);
-    oscClient.send('/start');
-    console.log('Starting at '+start_time);
+    d.run(function() {
+      start_time = new Date().getTime();
+      running = true;
+      end_timer = setTimeout(function() {
+        reset();
+      }, total_time+off_interval); //off at end to prevent contact retouch
+      pic_timer = setTimeout(function() {
+        takePic();
+      }, pic_t);
+      hr = 60;
+      oscClient.send('/heartrate', hr);
+      oscClient.send('/start');
+      console.log('Starting at '+start_time);
+    });
   }
 
   function reset() {
@@ -159,50 +171,59 @@ var server = app.listen(config.PORT, function () {
   }
 
   function takePic() {
-    var img_path = 'pics/'+new Date().toISOString()+'.jpg';
-    imagesnapjs.capture(path+img_path, function(err) {
-      console.log(err ? err : 'Success!');
-      if (recent_pics.length == 4) recent_pics.shift();
-      recent_pics.push(img_path);
-      dropboxPic(img_path);
+    d.run(function() {
+      var img_path = 'pics/'+new Date().toISOString()+'.jpg';
+      imagesnapjs.capture(path+img_path, function(err) {
+        console.log(err ? err : 'Success!');
+        if (recent_pics.length == 4) recent_pics.shift();
+        recent_pics.push(img_path);
+        dropboxPic(img_path);
+      });
     });
   }
 
   function dropboxPic(p, cb) {
-    fs.readFile(path+p, function(err, data) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      client.writeFile(p.substring(5), data, function(err, stat) {
-        console.log(p.substring(5));
-        if (err) console.log(err);
+    d.run(function() {
+      fs.readFile(path+p, function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        client.writeFile(p.substring(5), data, function(err, stat) {
+          console.log(p.substring(5));
+          if (err) console.log(err);
+        });
       });
     });
   }
 
   function tweetPic(p, u) {
-    if (u[0] !== '@') {
-      u = '@'+u;
-    }
-    var tweet = ' #StillnessInMotion at #TED2015';
-    fs.readFile(path+p, 'base64', function(err, data) {
-      twit.post('media/upload', { media: data }, function (err, data, response) {
-        var mediaIdStr = data.media_id_string
-        var params = { status: u+tweet, media_ids: [mediaIdStr] }
-        twit.post('statuses/update', params, function (err, data, response) {
-          if (err) console.log(err);
-        })
+    d.run(function() {
+      if (u[0] !== '@') {
+        u = '@'+u;
+      }
+      var tweet = ' #StillnessInMotion at #TED2015';
+      fs.readFile(path+p, 'base64', function(err, data) {
+        twit.post('media/upload', { media: data }, function (err, data, response) {
+          var mediaIdStr = data.media_id_string
+          var params = { status: u+tweet, media_ids: [mediaIdStr] }
+          twit.post('statuses/update', params, function (err, data, response) {
+            if (err) console.log(err);
+          })
+        });
       });
     });
   }
 
   function mailPic(p, e) {
-    var url = 'http://deltastillnessinmotion.com/share/send_mail.php?to='+e+'&photo='+p;
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        console.log(body);
-      }
+    d.run(function() {
+      var url = 'http://deltastillnessinmotion.com/share/send_mail.php?to='+e+'&photo='+p.substring(5);
+      console.log(url);
+      request(url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log(body);
+        }
+      });
     });
   }
 });

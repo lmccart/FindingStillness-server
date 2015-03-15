@@ -75,6 +75,7 @@
       padding: 20px 20px 24px 20px;
       border: 2px solid #ACACAC;
       border-radius: 14px;
+      text-align: center;
 
     }
 
@@ -201,9 +202,11 @@
         $('#option_buttons').hide();
         $('#input_label').html('ENTER YOUR TWITTER USERNAME');
         $('#input_field').width('445px');
+        $('#input_field').val('@');
         $('#input').width('932px');
         $('#input').fadeIn();
         action = 'tweet_pic';
+        $('#input_field').focus();
         return false;
       });
 
@@ -211,9 +214,11 @@
         $('#option_buttons').hide();
         $('#input_label').html('ENTER YOUR EMAIL ADDRESS');
         $('#input_field').width('645px');
+        $('#input_field').val('');
         $('#input').width('1132px');
         $('#input').fadeIn();
         action = 'mail_pic';
+        $('#input_field').focus();
         return false;
       });
 
