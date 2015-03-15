@@ -8,3 +8,5 @@ config.js
 *.log
 .env
 .env-old
+config-final.js
+www/*
