@@ -6,6 +6,7 @@
       font-family: 'WhitneyCondensed-Semibold', 'WhitneyCondensed'; 
       src: local('WhitneyCondensed-Semibold');
       background: black;
+      color: white;
       font-size: 48px;
     }
 
@@ -20,6 +21,7 @@
       margin: 30px 0 0 30px;
       text-align: center;
       cursor: pointer;
+      color: black;
     }
 
     #take_pic {
@@ -44,13 +46,14 @@
       float: left;
     }
 
-    #hr, #status {
-      color: white;
-    }
-
     #stats {
       padding: 30px;
       width: 600px;
+    }
+
+    #arduino_stats {
+      margin-top: 24px;
+      font-size: 24px;
     }
 
     #thumbnail {
@@ -109,6 +112,23 @@
           }
         });
 
+
+        $.getJSON(base_url+'get_arduino_update', function(data) {
+          if (data.blinker > 3000) {
+            $('#arduino_blinker').css('color', 'red');
+          } else {
+            $('#arduino_blinker').css('color', 'white');
+          }
+          $('#arduino_blinker').html('Blinker last ping: '+(data.blinker/1000).toFixed(1)+'s');
+            
+          if (data.heartsensor > 3000) {
+            $('#arduino_heartsensor').css('color', 'red');
+          } else {
+            $('#arduino_heartsensor').css('color', 'white');
+          }
+          $('#arduino_heartsensor').html('HeartSensor last ping: '+(data.heartsensor/1000).toFixed(1)+'s');
+        });
+
         $.getJSON(base_url+'get_pics', function(data) {
           var n = data.pics[data.pics.length-1];
           $('#thumbnail').attr('src', n);
@@ -127,6 +147,10 @@
       <img id='thumbnail' src=''/>
       <div id='status'></div>
       <div id='hr'></div>
+      <div id='arduino_stats'>
+        <div id='arduino_blinker'></div>
+        <div id='arduino_heartsensor'></div>
+      </div>
     </div>
     <div id='start'>START</div>
     <div id='reset'>RESET</div>

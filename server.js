@@ -89,6 +89,10 @@ var server = app.listen(config.PORT, function () {
   var end_timer, pic_timer;
   var pic_t = 75*1000; // 75s
   var off_interval = 30*1000;
+
+  var last_blinker_ping = -1;
+  var last_heartsensor_ping = -1;
+
   reset();
 
   app.get('/start', function (req, res) {
@@ -111,14 +115,24 @@ var server = app.listen(config.PORT, function () {
   });
 
   app.get('/send_heartrate', function (req, res) {
+    last_heartsensor_ping = new Date().getTime();
     hr = parseFloat(req.query.hr);
     oscClient.send('/heartrate', hr);
     res.send({status:'success'});
   });
 
   app.get('/get_update', function (req, res) {
-    var time_remaining = running ? Math.max(total_time - (new Date().getTime() - start_time), 0) : -1;
+    var isArduino = parseInt(req.query.arduino);
+    if (isArduino) last_blinker_ping = new Date().getTime();
+    var time_remaining = running ? Math.max(total_time - (last_blinker_ping - start_time), 0) : -1;
     res.send({hr: hr, remaining: time_remaining});
+  });
+
+  app.get('/get_arduino_update', function(req, res) {
+    var d = new Date().getTime();
+    var blinker_time = last_blinker_ping == -1 ? -1 : d - last_blinker_ping;
+    var heartsensor_time = last_heartsensor_ping == -1 ? -1 : d - last_heartsensor_ping;
+    res.send({blinker: blinker_time, heartsensor: heartsensor_time});
   });
 
   app.get('/get_pics', function (req, res) {
