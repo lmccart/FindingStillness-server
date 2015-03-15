@@ -5,6 +5,6 @@ node_modules/*
 pics/*
 public/pics/*
 config.js
+*.log
 .env
 .env-old
-*.log

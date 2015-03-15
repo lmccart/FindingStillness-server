@@ -9,8 +9,11 @@ var Dropbox = require("dropbox");
 
 var imagesnapjs = require('./imagesnap');
 
+var config = require('./config');
+
 var path = '/usr/local/var/www/';
 var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
+
 
 //// OSC
 var oscClient = new osc.Client('127.0.0.1', 3333);
@@ -19,17 +22,17 @@ var oscClient = new osc.Client('127.0.0.1', 3333);
 
 //// TWITTER
 var twit = new Twit({
-  consumer_key: process.env.twitter_consumer_key,
-  consumer_secret: process.env.twitter_consumer_secret,
-  access_token: process.env.twitter_access_token,
-  access_token_secret: process.env.twitter_access_token_secret
+  consumer_key: config.twitter_consumer_key,
+  consumer_secret: config.twitter_consumer_secret,
+  access_token: config.twitter_access_token,
+  access_token_secret: config.twitter_access_token_secret
 });
 
 
 //// DROPBOX
 var client = new Dropbox.Client({
-  key: process.env.dropbox_key,
-  token: process.env.dropbox_token
+  key: config.dropbox_key,
+  token: config.dropbox_token
 });
 client.authDriver(new Dropbox.AuthDriver.NodeServer(8191));
 client.authenticate(function(err, client) { 
@@ -62,7 +65,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-var server = app.listen(process.env.PORT, function () {
+var server = app.listen(config.PORT, function () {
 
   var host = server.address().address;
   var port = server.address().port;
