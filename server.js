@@ -14,7 +14,7 @@ var imagesnapjs = require('./imagesnap');
 var config = require('./config');
 
 var path = '/usr/local/var/www/';
-var recent_pics = ['pics/1423519974743.jpg', 'pics/1423522147207.jpg', 'pics/1423534927027.jpg', 'pics/1423866313364.jpg', 'pics/1423869293186.jpg'];
+var recent_pics = ['pics/2015-03-03T02%3a12%3a39.177Z.jpg', 'pics/2015-03-15T20%3a26%3a00.509Z.jpg', 'pics/2015-03-15T07%3a26%3a22.392Z.jpg', 'pics/2015-03-15T07%3a22%3a10.424Z.jpg', 'pics/2015-03-15T07%3a15%3a28.471Z.jpg'];
 
 
 //// OSC
