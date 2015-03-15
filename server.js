@@ -88,7 +88,7 @@ var server = app.listen(config.PORT, function () {
   var running = false;
   var end_timer, pic_timer;
   var pic_t = 78*1000; // 75s
-  var off_interval = 15*1000;
+  var off_interval = 20*1000;
 
   var last_blinker_ping = -1;
   var last_heartsensor_ping = -1;
