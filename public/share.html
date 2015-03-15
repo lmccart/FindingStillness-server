@@ -7,6 +7,10 @@
       src: local('WhitneyCondensed-Semibold');
       background: black;
       font-size: 48px;
+
+      -moz-user-select: none !important;
+      -webkit-user-select: none !important;
+      -ms-user-select: none !important;
     }
     #overlay {
       background: white;
@@ -110,7 +114,18 @@
     </style>
     <script src="js/jquery.js"></script>
     <script src="js/jssor.slider.mini.js"></script>
+    <script language="javascript" type="text/javascript">
+      // disable the contextual menu
+      document.oncontextmenu=RightMouseDown;
+      document.onmousedown = mouseDown; 
 
+      function mouseDown(e) {
+          if (e.which==3) {
+          //alert("Disabled - do whatever you like here..");
+         }
+      }
+      function RightMouseDown() { return false;}
+    </script>
     <script>
 
     $(document).ready(function() {
