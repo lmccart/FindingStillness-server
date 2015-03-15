@@ -114,14 +114,14 @@
 
 
         $.getJSON(base_url+'get_arduino_update', function(data) {
-          if (data.blinker > 3000) {
+          if (data.blinker > 6000) {
             $('#arduino_blinker').css('color', 'red');
           } else {
             $('#arduino_blinker').css('color', 'white');
           }
           $('#arduino_blinker').html('Blinker last ping: '+(data.blinker/1000).toFixed(1)+'s');
             
-          if (data.heartsensor > 3000) {
+          if (data.heartsensor > 6000) {
             $('#arduino_heartsensor').css('color', 'red');
           } else {
             $('#arduino_heartsensor').css('color', 'white');

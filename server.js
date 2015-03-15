@@ -84,11 +84,11 @@ var server = app.listen(config.PORT, function () {
 
   var hr = 0;
   var start_time = 0;
-  var total_time = 90*1000;
+  var total_time = 96*1000;
   var running = false;
   var end_timer, pic_timer;
-  var pic_t = 75*1000; // 75s
-  var off_interval = 30*1000;
+  var pic_t = 78*1000; // 75s
+  var off_interval = 15*1000;
 
   var last_blinker_ping = -1;
   var last_heartsensor_ping = -1;
@@ -185,6 +185,7 @@ var server = app.listen(config.PORT, function () {
   }
 
   function takePic() {
+    console.log('take pic');
     d.run(function() {
       var img_path = 'pics/'+new Date().toISOString()+'.jpg';
       imagesnapjs.capture(path+img_path, function(err) {
