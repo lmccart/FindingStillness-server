@@ -111,6 +111,21 @@
       z-index: 2;
       display: none;
     }
+
+    .arrow {
+      height: 200px;
+      width: 100px;
+      position: absolute;
+      top: 300px;
+      z-index: -2;
+    }
+
+    #left_arrow {
+      left: 100px;
+    }
+    #right_arrow {
+      right: 100px;
+    }
     </style>
     <script src="js/jquery.js"></script>
     <script src="js/jssor.slider.mini.js"></script>
@@ -254,6 +269,14 @@
       $('body').click(function() {
         resetButtons();
       });
+
+      $('#left_arrow').click(function() {
+        slider.$Prev();
+      });
+
+      $('#right_arrow').click(function() {
+        slider.$Next();
+      });
     });
     </script>
       
@@ -269,6 +292,8 @@
       <div></div>
     </div>
   </div>
+  <img id='left_arrow' class='arrow' src='logo-01.png'/>
+  <img id='right_arrow' class='arrow' src='logo-01.png'/>
   <img id='thanks' src='endpage1.png'/>
 
   <div id='overlay'></div>
