@@ -84,7 +84,7 @@ var server = app.listen(config.PORT, function () {
 
   var hr = 0;
   var start_time = 0;
-  var total_time = 96*1000;
+  var total_time = 92*1000;
   var running = false;
   var end_timer, pic_timer;
   var pic_t = 78*1000; // 75s
